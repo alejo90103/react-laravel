@@ -8,7 +8,7 @@ import {
   Dropdown,
   ButtonGroup
 } from 'react-bootstrap';
-import { login, home, logout, register } from 'routes/routes';
+import { login, home, logout, register, showContact } from 'routes/routes';
 
 const MainMenu = (state) => {
   
@@ -18,13 +18,14 @@ const MainMenu = (state) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          {(state.Auth.user !== undefined) ? <Nav.Link><Link to={home()}>Home</Link></Nav.Link> : <></>}
+          {(state.Auth.user !== undefined) ? <Link to={home()} className='nav-link'>Home</Link> : <></>}
+          {(state.Auth.user !== undefined) ? <Link to={showContact()} className='nav-link'>Contact</Link> : <></>}
         </Nav>
         <Nav>
           {(state.Auth.user === undefined) ? 
               <>
-                <Nav.Link><Link to={login()}>Iniciar Sesión</Link></Nav.Link>
-              <Nav.Link><Link to={register()}>Registrarse</Link></Nav.Link>
+                <Link to={login()} className='nav-link'>Iniciar Sesión</Link>
+                <Link to={register()} className='nav-link'>Registrarse</Link>
               </>
             : 
               <>
@@ -36,9 +37,9 @@ const MainMenu = (state) => {
                   variant="secondary"
                   title={state.Auth.user.name}
                 >
-                  <Dropdown.Item eventKey="1">Action</Dropdown.Item>
+                  <Link to={logout()} className='nav-link' style={{ color: 'black' }}>Mi Perfil</Link>
                   <Dropdown.Divider />
-                  <Dropdown.Item eventKey="4"><Link to={logout()}>Salir</Link></Dropdown.Item>
+                  <Link to={logout()} className='nav-link' style={{ color: 'black'}}>Salir</Link>
                 </DropdownButton>
               </>
           }

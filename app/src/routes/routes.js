@@ -1,3 +1,8 @@
+export const home = () => {
+  return '/home';
+}
+
+// AUTH
 export const login = () => {
   return '/login';
 }
@@ -10,6 +15,17 @@ export const register = () => {
   return '/register';
 }
 
-export const home = () => {
-  return '/home';
+// CONTACT
+export const showContact = () => {
+  return '/showContact';
+}
+
+export const addContact = () => {
+  return '/addContact';
+}
+
+export const editContact = (id = null) => {
+  if (id == null) {
+    return '/editContact'
+  }
 }
