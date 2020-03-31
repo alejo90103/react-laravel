@@ -23,7 +23,7 @@ import {
 import { register } from 'routes/routes'
 import { LogginService } from 'store/Auth/AuthService';
 
-const useStyles = makeStyles((theme, loading) => ({
+const useStyles = makeStyles((theme) => ({
   error : {
     color: 'red',
     fontSize: '12px'
@@ -111,6 +111,7 @@ const Login = function () {
               id="email"
               label="Email Address"
               name="email"
+              type="email"
               autoComplete="email"
               autoFocus
               aria-describedby="email-helper"
