@@ -111,12 +111,12 @@ const ShowContact = (state) => {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <>
-              <Tooltip title={"Edit Contact"}>
+              <Tooltip title={t("Contact.ShowContact.tooltip.edit")}>
                 <IconButton style={{ backgroundColor: '' }} onClick={handleEdit.bind(this, tableMeta)}>
                   <CreateIcon color="disabled" style={{ color: '#007bff' }} />
                 </IconButton>
               </Tooltip>
-              <Tooltip title={"Delete Contact"}>
+              <Tooltip title={t("Contact.ShowContact.tooltip.delete")}>
                 <IconButton style={{ backgroundColor: '' }} onClick={handleDelete.bind(this, tableMeta)}>
                   <DeleteIcon color="disabled" style={{ color: '#dc3545' }} />
                 </IconButton>
@@ -136,7 +136,7 @@ const ShowContact = (state) => {
     rowsPerPage: 10,
     customToolbar: () => {
       return (
-        <Tooltip title={"Add Contact"}>
+        <Tooltip title={t("Contact.ShowContact.tooltip.add")}>
           <IconButton style={{ backgroundColor: '#28a745' }} onClick={handleAddContact}>
             <AddIcon style={{ color: 'white' }} />
           </IconButton>

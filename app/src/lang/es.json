@@ -100,7 +100,12 @@
         "name": "Nombre",
         "email": "Correo",
         "phone": "Teléfono",
-        "action": "Acciones"
+        "action": "Acciones",
+        "tooltip": {
+          "add": "Añadir Contacto",
+          "edit": "Modificar Contacto",
+          "delete": "Eliminar Contacto"
+        }
       },
       "Service": {
         "list": {
