@@ -138,7 +138,7 @@ const ShowContact = (state) => {
   };
 
   const theme = createMuiTheme({
-    palette: { type: 'light' },
+    palette: { type: state.Theme.type },
     typography: { useNextVariants: true },
   });
   
