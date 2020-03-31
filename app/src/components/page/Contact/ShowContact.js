@@ -9,7 +9,7 @@ import AddIcon from "@material-ui/icons/Add";
 import MUIDataTable from "mui-datatables";
 import { CircularProgress, Typography, Tooltip, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 
-import ShimmerTable from 'components/UI/shimmer/ShimmerTable';
+import SkeletonTable from 'components/UI/skeleton/SkeletonTable';
 import { addContact, editContact } from 'routes/routes';
 import { ListContactService, DeleteContactService } from "store/Contact/ContactService";
 
@@ -144,7 +144,7 @@ const ShowContact = (state) => {
   
   if (initialLoading) {
     return (
-      <ShimmerTable count={state.Contact.contacts.length} />
+      <SkeletonTable count={state.Contact.contacts.length} />
     );
   } else {
     return (
