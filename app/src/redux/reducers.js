@@ -5,6 +5,7 @@ import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 
 import AuthReducer from 'store/Auth/AuthReducer';
 import ContactReducer from 'store/Contact/ContactReducer';
+import ThemeReducer from 'store/Theme/ThemeReducer';
 
 const persistConfig = {
   key: 'root',
@@ -14,7 +15,8 @@ const persistConfig = {
 
 const reducers = combineReducers({
   Auth: AuthReducer,
-  Contact: ContactReducer
+  Contact: ContactReducer,
+  Theme: ThemeReducer
 });
 
 export default persistReducer(persistConfig, reducers);

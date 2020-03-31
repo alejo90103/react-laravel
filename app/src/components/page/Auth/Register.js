@@ -1,22 +1,63 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
 import { Formik } from "formik";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
   Container,
-  Jumbotron,
-  Row,
-  Form,
+  Grid,
+  Box,
+  Avatar,
   Button,
-  Spinner
-} from 'react-bootstrap';
+  TextField,
+  FormControlLabel,
+  FormHelperText,
+  Checkbox,
+  CircularProgress,
+  Typography,
+  CssBaseline,
+  makeStyles
+} from '@material-ui/core';
 
+import { login } from 'routes/routes'
 import { RegisterService } from 'store/Auth/AuthService';
-import { rowStyled, jumbotronStyled, containerStyled, errorStyled } from 'style/form';
 
+const useStyles = makeStyles((theme, loading) => ({
+  error: {
+    color: 'red',
+    fontSize: '12px'
+  },
+  progress: {
+    color: theme.palette.success.main,
+    position: 'absolute',
+    zIndex: 1
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  avatarSuccess: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.success.main,
+  },
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 const initialValues = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   confirm_password: ''
@@ -24,8 +65,11 @@ const initialValues = {
 
 function validateForm(values) {
   const errors = {};
-  if (!values.name) {
-    errors.name = 'El nombre es requerido';
+  if (!values.firstName) {
+    errors.firstName = 'El nombre es requerido';
+  }
+  if (!values.lastName) {
+    errors.lastName = 'Los apellidos son requeridos';
   }
   if (!values.email) {
     errors.email = 'El correo es requerido';
@@ -43,11 +87,18 @@ const Register = () => {
   const { addToast } = useToasts();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const classes = useStyles();
 
   function handleSubmit(values) {
-    setLoading(true);
     if (values.password === values.confirm_password) {
-      RegisterService(values, setLoading, addToast, history);
+      const sendValues = {
+        name: values.firstName + '' + values.lastName,
+        email: values.email,
+        password: values.password,
+        confirm_password: values.confirm_password
+      }
+      setLoading(true);
+      RegisterService(sendValues, setLoading, addToast, history);
     } else {
       addToast('Las contraseñas no coinciden', {
         appearance: 'error',
@@ -58,48 +109,134 @@ const Register = () => {
   }
 
   return (
-    <div>
-      <Row className="justify-content-md-center" style={rowStyled()}>
-        <Jumbotron fluid style={jumbotronStyled()} className="col-5">
-          <Container style={containerStyled()}>
-            <h1 style={{ 'textAlign': 'center' }}>Bienvenido</h1>
-            <br />
-            <Formik initialValues={initialValues} validate={validateForm} onSubmit={handleSubmit}>
-              {({ values, errors, touched, handleChange, handleSubmit }) => (
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control name="name" type="text" placeholder="Nombre" value={values.name} onChange={handleChange} />
-                    {errors.name && touched.name && <p style={errorStyled()}>{errors.name}</p>}
-                  </Form.Group>
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Correo</Form.Label>
-                    <Form.Control name="email" type="email" placeholder="Correo" value={values.email} onChange={handleChange} />
-                    {errors.email && touched.email && <p style={errorStyled()}>{errors.email}</p>}
-                  </Form.Group>
-                  <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Contraseña</Form.Label>
-                    <Form.Control name="password" type="password" placeholder="Contraseña" value={values.password} onChange={handleChange} />
-                    {errors.password && touched.password && <p style={errorStyled()}>{errors.password}</p>}
-                  </Form.Group>
-                  <Form.Group controlId="formBasicPasswordConfirm">
-                    <Form.Label>Confirmar Contraseña</Form.Label>
-                    <Form.Control name="confirm_password" type="password" placeholder="Contraseña" value={values.confirm_password} onChange={handleChange} />
-                    {errors.confirm_password && touched.confirm_password && <p style={errorStyled()}>{errors.confirm_password}</p>}
-                  </Form.Group>
-                  <Form.Group controlId="formBasicButton" style={{ 'textAlign': 'center' }}>
-                    <Button variant="primary" type="submit">
-                      {loading ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : <></>}
-                    Registarse
-                  </Button>
-                  </Form.Group>
-                </Form>
-              )}
-            </Formik>
-          </Container>
-        </Jumbotron>
-      </Row>
-    </div>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        {loading ?
+          <Avatar className={classes.avatarSuccess}>
+            <LockOutlinedIcon />
+          </Avatar>
+          :
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+        }
+        {loading && <CircularProgress size={56} className={classes.progress} />}
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Formik initialValues={initialValues} validate={validateForm} onSubmit={handleSubmit}>
+        {({ values, errors, touched, handleChange, handleSubmit }) => (
+          <form className={classes.form} onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  aria-describedby="firstName-helper"
+                  value={values.firstName}
+                  onChange={handleChange}
+                />
+                {errors.firstName && touched.firstName && <FormHelperText id="firstName-helper">{errors.firstName}</FormHelperText>}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  aria-describedby="lastName-helper"
+                  value={values.lastName}
+                  onChange={handleChange}
+                />
+                {errors.lastName && touched.lastName && <FormHelperText id="lastName-helper">{errors.lastName}</FormHelperText>}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  aria-describedby="email-helper"
+                  value={values.email}
+                  onChange={handleChange}
+                />
+                {errors.email && touched.email && <FormHelperText id="email-helper">{errors.email}</FormHelperText>}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  aria-describedby="password-helper"
+                  value={values.password}
+                  onChange={handleChange}
+                />
+                {errors.password && touched.password && <FormHelperText id="password-helper">{errors.password}</FormHelperText>}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  name="confirm_password"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirm_password"
+                  aria-describedby="confirm-password-helper"
+                  value={values.confirm_password}
+                  onChange={handleChange}
+                />
+                {errors.confirm_password && touched.confirm_password && <FormHelperText id="confirm-password-helper">{errors.confirm_password}</FormHelperText>}
+              </Grid>
+              {/* <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  label="I want to receive inspiration, marketing promotions and updates via email."
+                />
+              </Grid> */}
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+            <Grid container justify="flex-end">
+            <Grid item>
+              <Link to={login()} variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
+          </form>
+        )}
+        </Formik>
+      </div>
+      <Box mt={5}>
+        <Typography variant="body2" color="textSecondary" align="center">
+          {'Copyright © '}
+          <a color="inherit" href="https://codeals.es/">
+            Codeals
+          </a>{' '}
+          {new Date().getFullYear()}
+          {'.'}
+        </Typography>
+      </Box>
+    </Container>
   );
 }
 

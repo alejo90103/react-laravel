@@ -70,7 +70,6 @@ export const AddContactService = async function (values, setLoading, addToast, h
             autoDismiss: true,
           });
           AddContactAction(dispatch, data);
-          // history.push(login());
         }
 
       })
