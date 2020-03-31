@@ -5,19 +5,23 @@ import App from 'App';
 import * as serviceWorker from 'serviceWorker';
 import 'includes/bootstrap';
 import { Provider } from 'react-redux';
+import { store, persistor } from 'redux/store';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-import { BrowserRouter } from 'react-router-dom'
+import { IntlProvider } from 'react-redux-multilingual';
+import { BrowserRouter } from 'react-router-dom';
 
 import Loading from 'components/page/Loading';
-import { store, persistor } from 'redux/store';
+import translations from 'lang/translations';
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <PersistGate loading={<Loading />} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </BrowserRouter>
+    <IntlProvider translations={translations()} locale='es'>
+      <BrowserRouter>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </BrowserRouter>
+    </IntlProvider>
   </Provider>, document.getElementById('root')
 );
 

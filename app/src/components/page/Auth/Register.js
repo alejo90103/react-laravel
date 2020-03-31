@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
 import { Formik } from "formik";
+import { useTranslate } from 'react-redux-multilingual'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
   Container,
@@ -63,31 +64,32 @@ const initialValues = {
   confirm_password: ''
 }
 
-function validateForm(values) {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = 'El nombre es requerido';
-  }
-  if (!values.lastName) {
-    errors.lastName = 'Los apellidos son requeridos';
-  }
-  if (!values.email) {
-    errors.email = 'El correo es requerido';
-  }
-  if (!values.password) {
-    errors.password = 'La contraseña es requerida';
-  }
-  if (!values.confirm_password) {
-    errors.confirm_password = 'La confirmación de la contraseña es requerida';
-  }
-  return errors;
-}
-
 const Register = () => {
+  const t = useTranslate();
   const { addToast } = useToasts();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
+
+  function validateForm(values) {
+    const errors = {};
+    if (!values.firstName) {
+      errors.firstName = t('Auth.Register.error.validate.firstName');
+    }
+    if (!values.lastName) {
+      errors.lastName = t('Auth.Register.error.validate.lastName');
+    }
+    if (!values.email) {
+      errors.email = t('Auth.Register.error.validate.email');
+    }
+    if (!values.password) {
+      errors.password = t('Auth.Register.error.validate.password');
+    }
+    if (!values.confirm_password) {
+      errors.confirm_password = t('Auth.Register.error.validate.confirmPassword');
+    }
+    return errors;
+  }
 
   function handleSubmit(values) {
     if (values.password === values.confirm_password) {
@@ -98,9 +100,9 @@ const Register = () => {
         confirm_password: values.confirm_password
       }
       setLoading(true);
-      RegisterService(sendValues, setLoading, addToast, history);
+      RegisterService(sendValues, setLoading, addToast, history, t);
     } else {
-      addToast('Las contraseñas no coinciden', {
+      addToast(t('Auth.Register.error.validate.matchPassword'), {
         appearance: 'error',
         autoDismiss: true,
       });
@@ -123,7 +125,7 @@ const Register = () => {
         }
         {loading && <CircularProgress size={56} className={classes.progress} />}
         <Typography component="h1" variant="h5">
-          Sign up
+          {t('Auth.Register.signUp')}
         </Typography>
         <Formik initialValues={initialValues} validate={validateForm} onSubmit={handleSubmit}>
         {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -136,7 +138,7 @@ const Register = () => {
                   variant="outlined"
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label={t('Auth.Register.firstName')}
                   autoFocus
                   aria-describedby="firstName-helper"
                   value={values.firstName}
@@ -149,7 +151,7 @@ const Register = () => {
                   variant="outlined"
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label={t('Auth.Register.lastName')}
                   name="lastName"
                   autoComplete="lname"
                   aria-describedby="lastName-helper"
@@ -163,7 +165,7 @@ const Register = () => {
                   variant="outlined"
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('Auth.Register.email')}
                   name="email"
                   aria-describedby="email-helper"
                   value={values.email}
@@ -176,7 +178,7 @@ const Register = () => {
                   variant="outlined"
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t('Auth.Register.password')}
                   type="password"
                   id="password"
                   aria-describedby="password-helper"
@@ -190,7 +192,7 @@ const Register = () => {
                   variant="outlined"
                   fullWidth
                   name="confirm_password"
-                  label="Confirm Password"
+                  label={t('Auth.Register.confirmPassword')}
                   type="password"
                   id="confirm_password"
                   aria-describedby="confirm-password-helper"
@@ -213,12 +215,12 @@ const Register = () => {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+              {t('Auth.Register.signUp')}
             </Button>
             <Grid container justify="flex-end">
             <Grid item>
               <Link to={login()} variant="body2">
-                Already have an account? Sign in
+                {t('Auth.Register.account')}
               </Link>
             </Grid>
           </Grid>

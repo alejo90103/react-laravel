@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { connect, useDispatch } from 'react-redux';
+import { IntlActions } from 'react-redux-multilingual'
+import { useTranslate } from 'react-redux-multilingual'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { 
   Menu as MenuIcon,
@@ -9,7 +11,9 @@ import {
   ChevronLeft as ChevronLeftIcon,
   Home as HomeIcon,
   Person as PersonIcon,
-  Palette as PaletteIcon
+  Palette as PaletteIcon,
+  Translate as TranslateIcon,
+  KeyboardArrowDown as KeyboardArrowDownIcon
 } from '@material-ui/icons';
 import {
   AppBar,
@@ -23,6 +27,8 @@ import {
   Divider,
   List,
   Typography,
+  Menu,
+  MenuItem,
   CssBaseline
 } from '@material-ui/core';
 
@@ -97,11 +103,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MainMenu(state) {
+  const t = useTranslate()
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,6 +117,20 @@ function MainMenu(state) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const changeLanguage = (lang) => {
+    setAnchorEl(null);
+    console.log(lang);
+    dispatch(IntlActions.setLocale(lang))
   };
   
   return (
@@ -133,15 +155,34 @@ function MainMenu(state) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title} noWrap>
-            React
+            {t('MainMenu.title')}
           </Typography>
+          <Button
+            startIcon={<TranslateIcon />}
+            endIcon={<KeyboardArrowDownIcon />}
+            aria-controls="simple-menu"
+            aria-haspopup="true" color="inherit"
+            onClick={handleClick}
+          >
+            {t('MainMenu.language.title')}
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={changeLanguage.bind(this, 'en')}>{t('MainMenu.language.en')}</MenuItem>
+            <MenuItem onClick={changeLanguage.bind(this, 'es')}>{t('MainMenu.language.es')}</MenuItem>
+          </Menu>
           {(state.Auth.user === undefined) ?
               <>
-                <Button color="inherit" onClick={()=>{history.push(login())}}>Login</Button>
-                <Button color="inherit" onClick={() => { history.push(register()) }}>Register</Button>
+                <Button color="inherit" onClick={() => { history.push(login()) }}>{t('MainMenu.login')}</Button>
+                <Button color="inherit" onClick={() => { history.push(register()) }}>{t('MainMenu.register')}</Button>
               </>
             :
-              <Button color="inherit" onClick={() => { history.push(logout()) }}>Logout</Button>
+              <Button color="inherit" onClick={() => { history.push(logout()) }}>{t('MainMenu.logout')}</Button>
           }
         </Toolbar>
       </AppBar>
@@ -171,13 +212,13 @@ function MainMenu(state) {
                 <ListItemIcon onClick={() => { history.push(home()) }}>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary='Home' />
+                <ListItemText primary={t('MainMenu.menu.home')} />
               </ListItem>
               <ListItem button key='contact'>
                 <ListItemIcon onClick={() => { history.push(showContact()) }}>
                   <PersonIcon />
                 </ListItemIcon>
-                <ListItemText primary='Contact' />
+                <ListItemText primary={t('MainMenu.menu.contact')} />
               </ListItem>
             </List>
             <Divider />
@@ -187,7 +228,7 @@ function MainMenu(state) {
           <ListItemIcon onClick={() => { (state.Theme.type === 'dark') ? LightThemeAction(dispatch) : DarkThemeAction(dispatch) }}>
             <PaletteIcon />
           </ListItemIcon>
-          <ListItemText primary='Cambiar Tema' />
+          <ListItemText primary={t('MainMenu.menu.theme')} />
         </ListItem>
       </Drawer>
     </div>

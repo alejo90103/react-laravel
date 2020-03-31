@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications'
 import { connect } from 'react-redux';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import MainMenu from 'components/UI/MainMenu';
@@ -48,10 +48,11 @@ function App(state) {
   
   return (
     <MuiThemeProvider theme={theme}>
-      <ToastProvider>
+      <ToastProvider
+        placement="bottom-center"
+      >
         <Router>
           <Suspense fallback={<Loading />}>
-            
             <div className="container">
               <MainMenu />
               <main className={classes.content}>

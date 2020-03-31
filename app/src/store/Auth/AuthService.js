@@ -4,8 +4,9 @@ import { headers } from 'config/headers';
 import { home, login } from 'routes/routes';
 import { AUTH_USER } from 'config/consts';
 import { LoginAction, LogoutAction } from "store/Auth/AuthAction";
+import { useTranslate } from 'react-redux-multilingual'
 
-export const LogginService = async function (values, setLoading, addToast, history, dispatch) {
+export const LogginService = async function (values, setLoading, addToast, history, dispatch, t) {
 
   try {
     const requestOptions = {
@@ -61,7 +62,7 @@ export const LogginService = async function (values, setLoading, addToast, histo
                 authUser.name = data.name;
                 window.localStorage.setItem(AUTH_USER, JSON.stringify(authUser));
                 setLoading(false);
-                addToast('Welcome ' + authUser.name, {
+                addToast(t('Auth.Service.login.welcome', {'name': authUser.name}), {
                   appearance: 'success',
                   autoDismiss: true,
                 });
@@ -73,7 +74,7 @@ export const LogginService = async function (values, setLoading, addToast, histo
             .catch(error => {
               window.localStorage.removeItem(AUTH_USER);
               setLoading(false);
-              addToast('User is not activated', {
+              addToast(t('Auth.Service.login.error.activation'), {
                 appearance: 'error',
                 autoDismiss: true,
               });
@@ -95,7 +96,7 @@ export const LogginService = async function (values, setLoading, addToast, histo
   }
 }
 
-export const RegisterService = (values, setLoading, addToast, history) => {
+export const RegisterService = (values, setLoading, addToast, history, t) => {
   try {
     const requestOptions = {
       method: 'POST',
@@ -121,7 +122,7 @@ export const RegisterService = (values, setLoading, addToast, history) => {
 
         if (response.status === 200) {
           setLoading(false);
-          addToast('Registration Complete', {
+          addToast(t('Auth.Service.register.complete'), {
             appearance: 'success',
             autoDismiss: true,
           });
@@ -131,7 +132,7 @@ export const RegisterService = (values, setLoading, addToast, history) => {
       })
       .catch(error => {
         setLoading(false);
-        addToast('Email already exist', {
+        addToast(t('Auth.Service.register.error.emailExist'), {
           appearance: 'error',
           autoDismiss: true,
         });

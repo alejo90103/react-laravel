@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
+import { IntlReducer as Intl } from 'react-redux-multilingual'
 import storage from 'redux-persist/lib/storage';
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 
@@ -16,7 +17,8 @@ const persistConfig = {
 const reducers = combineReducers({
   Auth: AuthReducer,
   Contact: ContactReducer,
-  Theme: ThemeReducer
+  Theme: ThemeReducer,
+  Intl
 });
 
 export default persistReducer(persistConfig, reducers);

@@ -4,7 +4,7 @@ import { headers } from 'config/headers';
 import { ListContactAction, AddContactAction, UpdateContactAction, DeleteContactAction } from "store/Contact/ContactAction";
 import { showContact } from 'routes/routes';
 
-export const ListContactService = async function (dispatch, addToast) {
+export const ListContactService = async function (dispatch, addToast, t) {
   try {
     const requestOptions = {
       method: 'GET',
@@ -28,7 +28,7 @@ export const ListContactService = async function (dispatch, addToast) {
 
       })
       .catch(error => {
-        addToast('Error fetching data', {
+        addToast(t("Contact.Service.list.error.fetching"), {
           appearance: 'error',
           autoDismiss: true,
         });
@@ -39,8 +39,7 @@ export const ListContactService = async function (dispatch, addToast) {
   }
 }
 
-export const AddContactService = async function (values, setLoading, addToast, history, dispatch) {
-  
+export const AddContactService = async function (values, setLoading, addToast, dispatch, t) {
   try {
     const requestOptions = {
       method: 'POST',
@@ -65,7 +64,7 @@ export const AddContactService = async function (values, setLoading, addToast, h
 
         if (response.status === 201) {
           setLoading(false);
-          addToast('Contacto Agregado', {
+          addToast(t("Contact.Service.add.success"), {
             appearance: 'success',
             autoDismiss: true,
           });
@@ -75,7 +74,7 @@ export const AddContactService = async function (values, setLoading, addToast, h
       })
       .catch(error => {
         setLoading(false);
-        addToast('Email already exist', {
+        addToast(error, {
           appearance: 'error',
           autoDismiss: true,
         });
@@ -87,7 +86,7 @@ export const AddContactService = async function (values, setLoading, addToast, h
   }
 }
 
-export const UpdateContactService = async function (values, setLoading, addToast, history, dispatch) {
+export const UpdateContactService = async function (values, setLoading, addToast, history, dispatch, t) {
   try {
     const requestOptions = {
       method: 'PUT',
@@ -113,7 +112,7 @@ export const UpdateContactService = async function (values, setLoading, addToast
 
         if (response.status === 200) {
           setLoading(false);
-          addToast('Contacto Modificado', {
+          addToast(t("Contact.Service.edit.success"), {
             appearance: 'success',
             autoDismiss: true,
           });
@@ -136,7 +135,7 @@ export const UpdateContactService = async function (values, setLoading, addToast
   }
 }
 
-export const DeleteContactService = async function (values, setloading, addToast, dispatch) {
+export const DeleteContactService = async function (values, setloading, addToast, dispatch, t) {
   try {
     const requestOptions = {
       method: 'POST',
@@ -159,7 +158,7 @@ export const DeleteContactService = async function (values, setloading, addToast
 
         if (response.status === 201) {
           DeleteContactAction(dispatch, data);
-          addToast('Contacto Eliminado', {
+          addToast(t("Contact.Service.remove.success"), {
             appearance: 'success',
             autoDismiss: true,
           });
@@ -168,7 +167,7 @@ export const DeleteContactService = async function (values, setloading, addToast
 
       })
       .catch(error => {
-        addToast('Error deleting data', {
+        addToast(t("Contact.Service.remove.error.remove"), {
           appearance: 'error',
           autoDismiss: true,
         });

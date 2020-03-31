@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
 import { useDispatch, connect } from "react-redux";
+import { useTranslate } from 'react-redux-multilingual'
 import { Formik } from "formik";
 import {
   Container,
@@ -54,21 +55,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function validateForm(values) {
-  const errors = {};
-  if (!values.name) {
-    errors.name = 'El nombre es requerido';
-  }
-  if (!values.email) {
-    errors.email = 'El correo es requerido';
-  }
-  if (!values.phone) {
-    errors.phone = 'El teléfono es requerido';
-  }
-  return errors;
-}
-
 const EditContact = (state) => {
+  const t = useTranslate();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { addToast } = useToasts();
@@ -100,10 +88,23 @@ const EditContact = (state) => {
     }
   }, [history, state]);
   
+  function validateForm(values) {
+    const errors = {};
+    if (!values.name) {
+      errors.name = t('Contact.EditContact.error.validate.name');
+    }
+    if (!values.email) {
+      errors.email = t('Contact.EditContact.error.validate.email');
+    }
+    if (!values.phone) {
+      errors.phone = t('Contact.EditContact.error.validate.phone');
+    }
+    return errors;
+  }
 
   function handleSubmit(values) {
     setLoading(true);
-    UpdateContactService(values, setLoading, addToast, history, dispatch);
+    UpdateContactService(values, setLoading, addToast, history, dispatch, t);
   }
 
   return (
@@ -112,7 +113,7 @@ const EditContact = (state) => {
       <Paper elevation={3}>
         <div className={classes.paper}>
           <Typography component="h1" variant="h2">
-            Edit Contact
+            {t('Contact.EditContact.title')}
           </Typography>
           <Formik initialValues={contact} validate={validateForm} onSubmit={handleSubmit} enableReinitialize={true}>
             {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -123,7 +124,7 @@ const EditContact = (state) => {
                   autoFocus
                   fullWidth
                   name="name"
-                  label="Name"
+                  label={t('Contact.EditContact.name')}
                   type="text"
                   id="name"
                   aria-describedby="name-helper"
@@ -136,7 +137,7 @@ const EditContact = (state) => {
                   margin="normal"
                   fullWidth
                   id="email"
-                  label="Email"
+                  label={t('Contact.EditContact.email')}
                   name="email"
                   type="email"
                   aria-describedby="email-helper"
@@ -149,7 +150,7 @@ const EditContact = (state) => {
                   margin="normal"
                   fullWidth
                   name="phone"
-                  label="Phone"
+                  label={t('Contact.EditContact.phone')}
                   type="name"
                   id="phone"
                   aria-describedby="phone-helper"
@@ -164,7 +165,7 @@ const EditContact = (state) => {
                   color="primary"
                   className={classes.submit}
                 >
-                  Edit
+                  {t('Contact.EditContact.saveButton')}
                 </Button>
                 {/* <Grid container>
                   <Grid item xs>

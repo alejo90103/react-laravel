@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
 import { useDispatch } from "react-redux";
+import { useTranslate } from 'react-redux-multilingual'
 import { Formik } from "formik";
 import {
   Container,
@@ -60,30 +61,31 @@ const initialValues = {
   phone: ''
 }
 
-function validateForm(values) {
-  const errors = {};
-  if (!values.name) {
-    errors.name = 'El nombre es requerido';
-  }
-  if (!values.email) {
-    errors.email = 'El correo es requerido';
-  }
-  if (!values.phone) {
-    errors.phone = 'El teléfono es requerido';
-  }
-  return errors;
-}
-
 const AddContact = () => {
+  const t = useTranslate();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
+  function validateForm(values) {
+    const errors = {};
+    if (!values.name) {
+      errors.name = t('Contact.AddContact.error.validate.name');
+    }
+    if (!values.email) {
+      errors.email = t('Contact.AddContact.error.validate.email');
+    }
+    if (!values.phone) {
+      errors.phone = t('Contact.AddContact.error.validate.phone');
+    }
+    return errors;
+  }
+
   function handleSubmit(values) {
     setLoading(true);
-    AddContactService(values, setLoading, addToast, history, dispatch);
+    AddContactService(values, setLoading, addToast, dispatch, t);
     values = initialValues;
   }
 
@@ -93,7 +95,7 @@ const AddContact = () => {
       <Paper elevation={3}>
         <div className={classes.paper}>
           <Typography component="h1" variant="h2">
-            New Contact
+            {t('Contact.AddContact.title')}
           </Typography>
           <Formik initialValues={initialValues} validate={validateForm} onSubmit={handleSubmit}>
             {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -104,7 +106,7 @@ const AddContact = () => {
                   autoFocus
                   fullWidth
                   name="name"
-                  label="Name"
+                  label={t('Contact.AddContact.name')}
                   type="text"
                   id="name"
                   aria-describedby="name-helper"
@@ -117,7 +119,7 @@ const AddContact = () => {
                   margin="normal"
                   fullWidth
                   id="email"
-                  label="Email"
+                  label={t('Contact.AddContact.email')}
                   name="email"
                   type="email"
                   aria-describedby="email-helper"
@@ -130,7 +132,7 @@ const AddContact = () => {
                   margin="normal"
                   fullWidth
                   name="phone"
-                  label="Phone"
+                  label={t('Contact.AddContact.phone')}
                   type="name"
                   id="phone"
                   aria-describedby="phone-helper"
@@ -145,7 +147,7 @@ const AddContact = () => {
                   color="primary"
                   className={classes.submit}
                 >
-                  Add
+                  {t('Contact.AddContact.addButton')}
                 </Button>
                 {/* <Grid container>
                   <Grid item xs>

@@ -1,0 +1,160 @@
+{
+  "locale": "en-US",
+  "messages": {
+    "MainMenu": {
+      "title": "React",
+      "login": "Login",
+      "register": "Register",
+      "logout": "Logout",
+      "language": {
+        "title": "Language",
+        "en": "English",
+        "es": "Español"
+      },
+      "menu": {
+        "home": "Home",
+        "contact": "Contacts",
+        "theme": "Change Theme"
+      }
+    },
+    "Auth": {
+      "Login": {
+        "signIn": "Welcome",
+        "email": "Email",
+        "password": "Password",
+        "remember": "Remember me",
+        "forgot": "Forgot password?",
+        "register": "Don't have an account? Sign Up",
+        "signInButton": "Sign In",
+        "error": {
+          "validate": {
+            "email": "Email is required",
+            "password": "Password is required"
+          }
+        }
+      },
+      "Register": {
+        "signUp": "Sign Up",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "account": "Already have an account? Sign in",
+        "error": {
+          "validate": {
+            "firstName": "First name is required",
+            "lastName": "Last name is required",
+            "email": "Email is required",
+            "password": "Password is required",
+            "confirmPassword": "Comfirm password is required",
+            "matchPassword": "Password not match"
+          }
+        }
+      },
+      "Service": {
+        "login": {
+          "welcome": "Welcome {name}!!!",
+          "error": {
+            "activation": "User is not activated"
+          }
+        },
+        "register": {
+          "complete": "Registration Complete",
+          "error": {
+            "emailExist": "Email already exist"
+          }
+        }
+      }
+    },
+    "Contact": {
+      "AddContact": {
+        "title": "New Contact",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "addButton": "Add",
+        "error": {
+          "validate": {
+            "name": "Name is required",
+            "email": "Email is required",
+            "phone": "Phone is required"
+          }
+        }
+      },
+      "EditContact": {
+        "title": "Edit Contact",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "saveButton": "Save",
+        "error": {
+          "validate": {
+            "name": "Name is required",
+            "email": "Email is required",
+            "phone": "Phone is required"
+          }
+        }
+      },
+      "ShowContact": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "action": "Actions"
+      },
+      "Service": {
+        "list": {
+          "error": {
+            "fetching": "Error fetching data"
+          }
+        },
+        "add": {
+          "success": "Added Contact"
+        },
+        "edit": {
+          "success": "Modified Contact"
+        },
+        "remove": {
+          "success": "Deleted Contact",
+           "error": {
+             "remove": "Error deleting data"
+           }
+        }
+      }
+    },
+    "TableTextLabels": {
+      "body": {
+        "noMatch": "Sorry, no matching records found",
+        "toolTip": "Sort",
+        "columnHeaderTooltip": "Sort for "
+      },
+      "pagination": {
+        "next": "Next Page",
+        "previous": "Previous Page",
+        "rowsPerPage": "Rows per page:",
+        "displayRows": "of"
+      },
+      "toolbar": {
+        "search": "Search",
+        "downloadCsv": "Download CSV",
+        "print": "Print",
+        "viewColumns": "View Columns",
+        "filterTable": "Filter Table"
+      },
+      "filter": {
+        "all": "All",
+        "title": "FILTERS",
+        "reset": "RESET"
+      },
+      "viewColumns": {
+        "title": "Show Columns",
+        "titleAria": "Show/Hide Table Columns"
+      },
+      "selectedRows": {
+        "text": "row(s) selected",
+        "delete": "Delete",
+        "deleteAria": "Delete Selected Rows"
+      }
+    }
+  }
+}

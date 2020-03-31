@@ -1,0 +1,160 @@
+{
+  "locale": "es-ES",
+  "messages": {
+    "MainMenu": {
+      "title": "React",
+      "login": "Entrar",
+      "register": "Registrarse",
+      "logout": "Salir",
+      "language": {
+        "title": "Idioma",
+        "en": "English",
+        "es": "Español"
+      },
+      "menu": {
+        "home": "Inicio",
+        "contact": "Contactos",
+        "theme": "Cambiar Tema"
+      }
+    },
+    "Auth": {
+      "Login": {
+        "signIn": "Bienvenido",
+        "email": "Correo",
+        "password": "Contraseña",
+        "remember": "Recuerdame",
+        "forgot": "¿Olvidaste la contraseña?",
+        "register": "¿No tienes una cuenta? Registrate",
+        "signInButton": "Entrar",
+        "error": {
+          "validate": {
+            "email": "El correo es requerido",
+            "password": "La contraseña es requerida"
+          }
+        }
+      },
+      "Register": {
+        "signUp": "Registrarse",
+        "firstName": "Nombre",
+        "lastName": "Apellidos",
+        "email": "Correo",
+        "password": "Contraseña",
+        "confirmPassword": "Confirmar Contraseña",
+        "account": "¿Ya tienes cuenta? Entra",
+        "error": {
+          "validate": {
+            "firstName": "El nombre es requerido",
+            "lastName": "Los apellidos son requeridos",
+            "email": "El correo es requerido",
+            "password": "La contraseña es requerida",
+            "confirmPassword": "La confirmación de la contraseña es requerida",
+            "matchPassword": "Las contraseñas no coinciden"
+          }
+        }
+      },
+      "Service": {
+        "login": {
+          "welcome": "Bienvenido {name}!!!",
+          "error": {
+            "activation": "Usuario no activado, revise su correo"
+          }
+        },
+        "register": {
+          "complete": "Registro Completado",
+          "error": {
+            "emailExist": "El correo ya extite"
+          }
+        }
+      }
+    },
+    "Contact": {
+      "AddContact": {
+        "title": "Nuevo Contacto",
+        "name": "Nombre",
+        "email": "Correo",
+        "phone": "Teléfono",
+        "addButton": "Agregar",
+        "error": {
+          "validate": {
+            "name": "El nombre es requerido",
+            "email": "El nombre es requerido",
+            "phone": "El teléfono es requerido"
+          }
+        }
+      },
+      "EditContact": {
+        "title": "Editar Contacto",
+        "name": "Nombre",
+        "email": "Correo",
+        "phone": "Teléfono",
+        "saveButton": "Guardar",
+        "error": {
+          "validate": {
+            "name": "El nombre es requerido",
+            "email": "El nombre es requerido",
+            "phone": "El teléfono es requerido"
+          }
+        }
+      },
+      "ShowContact": {
+        "name": "Nombre",
+        "email": "Correo",
+        "phone": "Teléfono",
+        "action": "Acciones"
+      },
+      "Service": {
+        "list": {
+          "error": {
+            "fetching": "Error obteniendo datos"
+          }
+        },
+        "add": {
+          "success": "Contacto Agregado"
+        },
+        "edit": {
+          "success": "Contacto Modificado"
+        },
+        "remove": {
+          "success": "Contacto Eliminado",
+          "error": {
+            "remove": "Error eliminando datos"
+          }
+        }
+      }
+    },
+    "TableTextLabels": {
+      "body": {
+        "noMatch": "Lo siento, no se han encrontrado datos",
+        "toolTip": "Ordenar",
+        "columnHeaderTooltip": "Ordenar por "
+      },
+      "pagination": {
+        "next": "Página Siguiente",
+        "previous": "Página Anterior",
+        "rowsPerPage": "Filas por página:",
+        "displayRows": "de"
+      },
+      "toolbar": {
+        "search": "Buscar",
+        "downloadCsv": "Descargar CSV",
+        "print": "Imprimir",
+        "viewColumns": "Ver Columnas",
+        "filterTable": "Filtrar"
+      },
+      "filter": {
+        "all": "TODOS",
+        "title": "FILTRAR",
+        "reset": "REINICIAR"
+      },
+      "viewColumns": {
+        "title": "Mostrar Columnas",
+        "titleAria": "Mostrar/Ocultar Columnas de la Tabla"
+      },
+      "selectedRows": {
+        "text": "fila(s) selecionadas",
+        "delete": "Eliminar",
+        "deleteAria": "Eliminar Filas Seleccionadas"
+      }
+    }
+  }
+}

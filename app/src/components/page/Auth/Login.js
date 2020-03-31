@@ -3,6 +3,7 @@ import { useHistory, Link } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
+import { useTranslate } from 'react-redux-multilingual'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
   Container,
@@ -61,27 +62,28 @@ const initialValues = {
   password: ''
 }
 
-function validateForm(values) {
-  const errors = {};
-  if (!values.email) {
-    errors.email = 'El correo es requerido';
-  }
-  if (!values.password) {
-    errors.password = 'La contraseña es requerida';
-  }
-  return errors;
-}
-
 const Login = function () {
+  const t = useTranslate();
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
 
+  function validateForm(values) {
+    const errors = {};
+    if (!values.email) {
+      errors.email = t('Auth.Login.error.validate.email');
+    }
+    if (!values.password) {
+      errors.password = t('Auth.Login.error.validate.password');
+    }
+    return errors;
+  }
+
   function handleSubmit(values) {
     setLoading(true);
-    LogginService(values, setLoading, addToast, history, dispatch);
+    LogginService(values, setLoading, addToast, history, dispatch, t);
   }
 
   return (
@@ -99,7 +101,7 @@ const Login = function () {
         }
         {loading && <CircularProgress size={56} className={classes.progress} />}
         <Typography component="h1" variant="h5">
-          Sign in
+          {t('Auth.Login.signIn')}
         </Typography>
         <Formik initialValues={initialValues} validate={validateForm} onSubmit={handleSubmit}>
         {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -109,7 +111,7 @@ const Login = function () {
               margin="normal"
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('Auth.Login.email')}
               name="email"
               type="email"
               autoComplete="email"
@@ -124,7 +126,7 @@ const Login = function () {
               margin="normal"
               fullWidth
               name="password"
-              label="Password"
+              label={t('Auth.Login.password')}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -135,7 +137,7 @@ const Login = function () {
             {errors.password && touched.password && <FormHelperText id="password-helper">{errors.password}</FormHelperText>}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label={t('Auth.Login.remember')}
             />
             <Button
               type="submit"
@@ -144,17 +146,17 @@ const Login = function () {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              {t('Auth.Login.signInButton')}
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link to='' variant="body2">
-                  Forgot password?
+                  {t('Auth.Login.forgot')}
                 </Link>
               </Grid>
               <Grid item>
                 <Link to={register} variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {t('Auth.Login.register')}
                 </Link>
               </Grid>
             </Grid>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, connect } from "react-redux";
+import { useTranslate } from 'react-redux-multilingual'
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications'
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -7,11 +8,17 @@ import CreateIcon from '@material-ui/icons/Create';
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import MUIDataTable from "mui-datatables";
-import { CircularProgress, Typography, Tooltip, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import { 
+  CircularProgress,
+  Typography,
+  Tooltip,
+  MuiThemeProvider,
+  createMuiTheme } from '@material-ui/core';
 
 import SkeletonTable from 'components/UI/skeleton/SkeletonTable';
 import { addContact, editContact } from 'routes/routes';
 import { ListContactService, DeleteContactService } from "store/Contact/ContactService";
+import { muiTableLanguageConfig } from 'utils/muiTableLanguageConfig'
 
 const container = {
   border: "0px solid rgba(255, 255, 255, 1)",
@@ -24,6 +31,7 @@ const container = {
 }
 
 const ShowContact = (state) => {
+  const t = useTranslate();
   const history = useHistory();
   const dispatch = useDispatch();
   const { addToast } = useToasts();
@@ -31,7 +39,7 @@ const ShowContact = (state) => {
   const [loading, setloading] = useState(false);
 
   useEffect(() => {
-    ListContactService(dispatch, addToast);
+    ListContactService(dispatch, addToast, t);
     setTimeout(() => {
       setInitialLoading(false);
     }, 1000);
@@ -49,7 +57,7 @@ const ShowContact = (state) => {
       id: data.rowData[0]
     }
     setloading(true);
-    DeleteContactService(values, setloading, addToast, dispatch);
+    DeleteContactService(values, setloading, addToast, dispatch, t);
   }
 
   const handleAddContact = () => {
@@ -69,7 +77,7 @@ const ShowContact = (state) => {
     },
     {
       name: "name",
-      label: "Name",
+      label: t("Contact.ShowContact.name"),
       options: {
         filter: false,
         sort: true
@@ -77,7 +85,7 @@ const ShowContact = (state) => {
     },
     {
       name: "email",
-      label: "Email",
+      label: t("Contact.ShowContact.email"),
       options: {
         filter: false,
         sort: true,
@@ -85,7 +93,7 @@ const ShowContact = (state) => {
     },
     {
       name: "phone",
-      label: "Phone",
+      label: t("Contact.ShowContact.phone"),
       options: {
         filter: false,
         sort: false,
@@ -93,7 +101,7 @@ const ShowContact = (state) => {
     },
     {
       name: "actions",
-      label: "Actions",
+      label: t("Contact.ShowContact.action"),
       options: {
         filter: false,
         sort: false,
@@ -134,12 +142,13 @@ const ShowContact = (state) => {
           </IconButton>
         </Tooltip>
       );
-    }
+    },
+    textLabels: muiTableLanguageConfig(t),
   };
 
   const theme = createMuiTheme({
     palette: { type: state.Theme.type },
-    typography: { useNextVariants: true },
+    // typography: { useNextVariants: true },
   });
   
   if (initialLoading) {
@@ -151,10 +160,10 @@ const ShowContact = (state) => {
       <div style={container}>
         <MuiThemeProvider theme={theme}>
           <MUIDataTable
-            title={<Typography variant="h3">
-                    Contact List
+            key="es"
+            title={<Typography component="h1" variant="h3">
                     {loading && <CircularProgress size={28} style={{ marginLeft: 15, position: 'relative', top: 4 }} />}
-                    </Typography>}
+                  </Typography>}
             data={state.Contact.contacts}
             columns={columns}
             options={options}
