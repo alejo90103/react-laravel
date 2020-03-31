@@ -1,10 +1,10 @@
-export const LightThemeAction = function (dispatch, contact) {
+export const LightThemeAction = function (dispatch) {
   dispatch({
     type: 'LIGHT'
   });
 }
 
-export const DarkThemeAction = function (dispatch, contact) {
+export const DarkThemeAction = function (dispatch) {
   dispatch({
     type: 'DARK'
   });

@@ -42,7 +42,7 @@ class ForgotPassword extends Mailable
     {
         $url = $this->request->input('url');
 
-        return $this->from('soporte@turecarguita.com')
+        return $this->from('info@codeals.es')
             ->view('mails.forgot-password')
             ->with('token', $this->token)
             ->with('url', $url)

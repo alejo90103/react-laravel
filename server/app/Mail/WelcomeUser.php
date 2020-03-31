@@ -37,7 +37,7 @@ class WelcomeUser extends Mailable
      */
     public function build()
     {
-        return $this->from('soporte@turecarguita.com')
+        return $this->from('info@codeals.es.com')
             ->view('mails.register-welcome');
     }
 }

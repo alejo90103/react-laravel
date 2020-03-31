@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { 
   Menu as MenuIcon,
   ChevronRight as ChevronRightIcon,
   ChevronLeft as ChevronLeftIcon,
   Home as HomeIcon,
-  Person as PersonIcon
+  Person as PersonIcon,
+  Palette as PaletteIcon
 } from '@material-ui/icons';
-// import {
-//   Navbar,
-//   Nav,
-//   DropdownButton,
-//   Dropdown,
-//   ButtonGroup,
-//   Button
-// } from 'react-bootstrap';
 import {
   AppBar,
   Toolbar,
@@ -32,7 +25,9 @@ import {
   Typography,
   CssBaseline
 } from '@material-ui/core';
+
 import { login, home, logout, register, showContact } from 'routes/routes';
+import { LightThemeAction, DarkThemeAction } from 'store/Theme/ThemeAction';
 
 const drawerWidth = 240;
 
@@ -102,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MainMenu(state) {
+  const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
@@ -169,30 +165,30 @@ function MainMenu(state) {
         </div>
         <Divider />
         {(state.Auth.user !== undefined) &&
-          <List>
-            <ListItem button key='home'>
-              <ListItemIcon onClick={() => { history.push(home()) }}>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary='Home' />
-            </ListItem>
-            <ListItem button key='contact'>
-              <ListItemIcon onClick={() => { history.push(showContact()) }}>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary='Contact' />
-            </ListItem>
-          </List>
+          <>
+            <List>
+              <ListItem button key='home'>
+                <ListItemIcon onClick={() => { history.push(home()) }}>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary='Home' />
+              </ListItem>
+              <ListItem button key='contact'>
+                <ListItemIcon onClick={() => { history.push(showContact()) }}>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary='Contact' />
+              </ListItem>
+            </List>
+            <Divider />
+          </>
         }
-        {/* <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
+        <ListItem button key='theme'>
+          <ListItemIcon onClick={() => { (state.Theme.type === 'dark') ? LightThemeAction(dispatch) : DarkThemeAction(dispatch) }}>
+            <PaletteIcon />
+          </ListItemIcon>
+          <ListItemText primary='Cambiar Tema' />
+        </ListItem>
       </Drawer>
     </div>
     

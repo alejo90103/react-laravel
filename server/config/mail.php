@@ -62,7 +62,7 @@ return array(
     | used globally for all e-mails that are sent by your application.
     |
     */
- 'from' => array('address' => 'soporte@turecarguita.com', 'name' => 'Tu Recarguita'),
+ 'from' => array('address' => 'info@codeals.es', 'name' => 'Codeals'),
 
 
     /*
@@ -88,7 +88,7 @@ return array(
     | connection. You may also set the "password" value below this one.
     |
     */
-     'username' => 'soporte@turecarguita.com',
+     'username' => 'info@codeals.es',
  /*
     |--------------------------------------------------------------------------
     | SMTP Server Password

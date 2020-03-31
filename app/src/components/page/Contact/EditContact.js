@@ -58,7 +58,7 @@ const EditContact = (state) => {
         }
       }
     }
-  }, [dispatch, addToast, history, state, formik]);
+  }, [history, state]);
   
 
   function handleSubmit(values) {
