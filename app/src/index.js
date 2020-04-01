@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'index.css';
 import App from 'App';
+import ConnectionCheck from 'components/hoc/ConnectionCheck';
 import * as serviceWorker from 'serviceWorker';
 import 'includes/bootstrap';
 import { Provider } from 'react-redux';
@@ -18,7 +19,8 @@ ReactDOM.render(
     <IntlProvider translations={translations()} locale='es'>
       <BrowserRouter>
         <PersistGate loading={<Loading />} persistor={persistor}>
-          <App />
+          {/* <App /> */}
+          <ConnectionCheck Component={App}/>
         </PersistGate>
       </BrowserRouter>
     </IntlProvider>

@@ -9,6 +9,7 @@ import MainMenu from 'components/UI/MainMenu';
 import { login, home, logout, register, showContact, addContact, editContact } from 'routes/routes';
 import RequireAuth from 'components/hoc/RequireAuth';
 import Loading from 'components/page/Loading';
+import ConnectionCheck from 'components/hoc/ConnectionCheck';
 
 const Home = lazy(() => import('components/page/Home'));
 
