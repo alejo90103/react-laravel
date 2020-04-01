@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     // padding: theme.spacing(3),
-    padding: '57px',
+    // padding: '57px',
   },
 }));
 
@@ -47,6 +47,7 @@ function App(state) {
   });
   
   return (
+    
     <MuiThemeProvider theme={theme}>
       <ToastProvider
         placement="bottom-center"

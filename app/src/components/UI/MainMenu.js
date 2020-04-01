@@ -29,7 +29,8 @@ import {
   Typography,
   Menu,
   MenuItem,
-  CssBaseline
+  CssBaseline,
+  useMediaQuery
 } from '@material-ui/core';
 
 import { login, home, logout, register, showContact } from 'routes/routes';
@@ -110,6 +111,7 @@ function MainMenu(state) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const matches = useMediaQuery('(min-width:600px)');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -164,7 +166,7 @@ function MainMenu(state) {
             aria-haspopup="true" color="inherit"
             onClick={handleClick}
           >
-            {t('MainMenu.language.title')}
+            {matches && t('MainMenu.language.title')}
           </Button>
           <Menu
             id="simple-menu"

@@ -7,7 +7,7 @@ export const muiTableLanguageConfig = (t) => ({
   pagination: {
     next: t("TableTextLabels.pagination.next"),
     previous: t("TableTextLabels.pagination.previous"),
-    rowsPerPage: t("TableTextLabels.pagination.rowsPerPage"),
+    rowsPerPage: "",
     displayRows: t("TableTextLabels.pagination.displayRows"),
   },
   toolbar: {

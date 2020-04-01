@@ -131,9 +131,9 @@ const ShowContact = (state) => {
   const options = {
     // filterType: 'checkbox',
     filter: false,
-    rowsPerPageOptions: [5, 10, 25, 50],
+    rowsPerPageOptions: [10, 20],
     elevation: 4,
-    rowsPerPage: 10,
+    // rowsPerPage: 10,
     customToolbar: () => {
       return (
         <Tooltip title={t("Contact.ShowContact.tooltip.add")}>
@@ -144,6 +144,7 @@ const ShowContact = (state) => {
       );
     },
     textLabels: muiTableLanguageConfig(t),
+    responsive: 'scrollMaxHeight',
   };
 
   const theme = createMuiTheme({
