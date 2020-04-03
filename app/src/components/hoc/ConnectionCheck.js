@@ -1,46 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect} from 'react';
+import { connect, useDispatch } from "react-redux";
+import { useToasts } from 'react-toast-notifications'
 
-const ConnectionCheck = ({Component}) => {
-  
-  const [isDisconnected, setIsDisconnected] = useState(false);
+import App from 'App';
 
-  const handleConnectionChange = () => {
-    const condition = navigator.onLine ? 'online' : 'offline';
-    if (condition === 'online') {
-      const webPing = setInterval(
-        () => {
-          fetch('//google.com', { mode: 'no-cors' })
-            .then(() => {
-              setIsDisconnected(false);
-              return clearInterval(webPing)
-            })
-            .catch(() => {
-              return setIsDisconnected(true);
-            })
-        }, 2000);
-      return;
-    }
-    return setIsDisconnected(true);
-  }
+import { ConnectionOnlineAction, ConnectionOfflineAction } from 'store/Connection/ConnectionAction';
+
+const ConnectionCheck = (state) => {
+  const dispatch = useDispatch();
+  const { addToast } = useToasts();
+
 
   useEffect(() => {
-    handleConnectionChange();
-    window.addEventListener('online', handleConnectionChange);
-    window.addEventListener('offline', handleConnectionChange);
-  }, [handleConnectionChange]);
-
+    const condition = navigator.onLine ? 'online' : 'offline';
+    if (condition === 'online') {
+      addToast('Online', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+    } else {
+      addToast('Offline', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+    window.addEventListener('online', () => {
+      ConnectionOnlineAction(dispatch);
+      addToast('Online', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+    });
+    window.addEventListener('offline', () => {
+      ConnectionOfflineAction(dispatch);
+      addToast('Offline', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    });
+  }, []);
   
-
-  if (isDisconnected){
-    return (
-      <div className="internet-error">
-        <p>Internet connection lost</p>
-      </div>
-    );
-  } else {
-    return <Component />;
-  }
+  return (
+    <App />
+  );
 }
 
-export default ConnectionCheck;
+function mapStateToProps(state) {
+  return state
+};
+
+export default connect(mapStateToProps)(ConnectionCheck);
+

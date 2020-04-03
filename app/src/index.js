@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'index.css';
-import App from 'App';
 import ConnectionCheck from 'components/hoc/ConnectionCheck';
 import * as serviceWorker from 'serviceWorker';
 import 'includes/bootstrap';
 import { Provider } from 'react-redux';
+import { ToastProvider } from 'react-toast-notifications'
 import { store, persistor } from 'redux/store';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { IntlProvider } from 'react-redux-multilingual';
@@ -20,7 +20,11 @@ ReactDOM.render(
       <BrowserRouter>
         <PersistGate loading={<Loading />} persistor={persistor}>
           {/* <App /> */}
-          <ConnectionCheck Component={App}/>
+          <ToastProvider
+            placement="bottom-center"
+          >
+            <ConnectionCheck />
+          </ToastProvider>
         </PersistGate>
       </BrowserRouter>
     </IntlProvider>

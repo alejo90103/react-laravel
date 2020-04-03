@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { useToasts } from 'react-toast-notifications'
 import { Formik } from "formik";
 import { useTranslate } from 'react-redux-multilingual'
@@ -64,7 +65,7 @@ const initialValues = {
   confirm_password: ''
 }
 
-const Register = () => {
+const Register = (state) => {
   const t = useTranslate();
   const { addToast } = useToasts();
   const history = useHistory();
@@ -214,6 +215,7 @@ const Register = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={state.Connection.status === "offline" ? true : false}
             >
               {t('Auth.Register.signUp')}
             </Button>
@@ -242,4 +244,8 @@ const Register = () => {
   );
 }
 
-export default Register;
+function mapStateToProps(state) {
+  return state
+};
+
+export default connect(mapStateToProps)(Register);

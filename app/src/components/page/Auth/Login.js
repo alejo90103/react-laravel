@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { useTranslate } from 'react-redux-multilingual'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -21,7 +21,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-import { register } from 'routes/routes'
+import { register, login } from 'routes/routes'
 import { LogginService } from 'store/Auth/AuthService';
 
 const useStyles = makeStyles((theme) => ({
@@ -62,7 +62,7 @@ const initialValues = {
   password: ''
 }
 
-const Login = function () {
+const Login = function (state) {
   const t = useTranslate();
   const dispatch = useDispatch();
   const { addToast } = useToasts();
@@ -145,6 +145,7 @@ const Login = function () {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={state.Connection.status === "offline" ? true : false}
             >
               {t('Auth.Login.signInButton')}
             </Button>
@@ -178,4 +179,8 @@ const Login = function () {
   )
 }
 
-export default Login;
+function mapStateToProps(state) {
+  return state
+};
+
+export default connect(mapStateToProps)(Login);

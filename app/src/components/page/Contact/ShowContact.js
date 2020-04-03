@@ -111,14 +111,14 @@ const ShowContact = (state) => {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <>
-              <Tooltip title={t("Contact.ShowContact.tooltip.edit")}>
-                <IconButton style={{ backgroundColor: '' }} onClick={handleEdit.bind(this, tableMeta)}>
-                  <CreateIcon color="disabled" style={{ color: '#007bff' }} />
+              <Tooltip disabled={state.Connection.status === "offline" ? true : false} title={t("Contact.ShowContact.tooltip.edit")}>
+                <IconButton disabled={state.Connection.status === "offline" ? true : false} style={{ backgroundColor: '' }} onClick={handleEdit.bind(this, tableMeta)}>
+                  <CreateIcon color="disabled" style={{ "color": state.Connection.status === "offline" ? "" : "#007bff" }} />
                 </IconButton>
               </Tooltip>
-              <Tooltip title={t("Contact.ShowContact.tooltip.delete")}>
+              <Tooltip disabled={state.Connection.status === "offline" ? true : false} title={t("Contact.ShowContact.tooltip.delete")}>
                 <IconButton style={{ backgroundColor: '' }} onClick={handleDelete.bind(this, tableMeta)}>
-                  <DeleteIcon color="disabled" style={{ color: '#dc3545' }} />
+                  <DeleteIcon color="disabled" style={{"color": state.Connection.status === "offline" ? "" : "#dc3545"}} />
                 </IconButton>
               </Tooltip>
             </>
@@ -136,9 +136,9 @@ const ShowContact = (state) => {
     // rowsPerPage: 10,
     customToolbar: () => {
       return (
-        <Tooltip title={t("Contact.ShowContact.tooltip.add")}>
-          <IconButton style={{ backgroundColor: '#28a745' }} onClick={handleAddContact}>
-            <AddIcon style={{ color: 'white' }} />
+        <Tooltip disabled={state.Connection.status === "offline" ? true : false} title={t("Contact.ShowContact.tooltip.add")}>
+          <IconButton style={state.Connection.status === "offline" ? { "color": "", backgroundColor: '' } : { backgroundColor: '#28a745', "color": "#28a745" }} onClick={handleAddContact}>
+            <AddIcon style={{ "color": state.Connection.status === "offline" ? "" : "#fff" }} />
           </IconButton>
         </Tooltip>
       );
